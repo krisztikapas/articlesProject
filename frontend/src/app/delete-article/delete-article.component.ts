@@ -16,6 +16,7 @@ export class DeleteArticleComponent implements OnInit {
     category:'',
     date:''
   }
+  message:string
 
   constructor(private route:ActivatedRoute, private service:ApiService,
     private router:Router) { }
@@ -39,10 +40,9 @@ export class DeleteArticleComponent implements OnInit {
   }
 
   confirm(){
-    console.log("confirm clicked!");
-    this.service.deleteArticle(this.id).subscribe((data)=>{
-      console.log('Data - ' , data);
-    })
+    //console.log("confirm clicked!");
+    this.service.deleteArticle(this.id).subscribe(data => 
+      console.log(data));
   }
 
 

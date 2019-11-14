@@ -5,63 +5,161 @@ using Microsoft.Extensions.Logging;
 using ArticlesProjectDataAccess.Interfaces;
 using ArticlesProjectDataAccess.Repositories;
 using Microsoft.AspNetCore.Cors;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Net;
+using System.Data.Entity.Infrastructure;
 
 namespace ArticlesProject.Controllers
 {
-    //EnableCors("http://localhost:4200", "*", "*")]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
+    //[EnableCors("http://localhost:4200", "*", "*")]
     public class ArticlesController : ControllerBase
     {
-        private readonly ILogger<ArticlesController> _logger;
-        private IArticlesRepository _articlesRepository;
+        private readonly IArticlesRepository _articlesRepository;
+        private readonly ICategoriesRepository _categoriesRepository;
 
-        public ArticlesController(ILogger<ArticlesController> logger, IArticlesRepository articlesRepository)
+
+        public ArticlesController( IArticlesRepository articlesRepository,ICategoriesRepository categoriesRepository)
         {
-            _logger = logger;
             _articlesRepository = articlesRepository;
+            _categoriesRepository = categoriesRepository;
 
         }
 
-        // GET: api/Articles
+        private bool ArticleExists(int id)
+        {
+            return  _articlesRepository.Exist(id);
+        }
+
+        //[HttpGet]
+        //[Produces(typeof(DbSet<Article>))]
+        //public IActionResult GetArticle()
+        //{
+        //    var results = new ObjectResult(_articlesRepository.GetAll())
+        //    {
+        //        StatusCode = (int)HttpStatusCode.OK
+        //    };
+
+
+        //    Request.HttpContext.Response.Headers.Add("X-Total-Count", _articlesRepository.GetAll().Count().ToString());
+
+        //    return results;
+        //}
+
         [HttpGet]
-        public IEnumerable<Article> Get()
+       // [Produces(typeof(DbSet<Article>))]
+        public IActionResult GetArticlesWithCategoryName()
         {
-            return _articlesRepository.GetArticles();
+            var results = _articlesRepository.GetAll();
+            if (results != null)
+            {
+                foreach (var item in results)
+                {
+                    item.Category = _categoriesRepository.Find(item.CategoryId);
+                }
+                // StatusCode =(int)HttpStatusCode.OK;
+               
+            }
+            //Request.HttpContext.Response.Headers.Add("X-Total-Count", _articlesRepository.GetAll().Count().ToString());
+            var res = results.ToList();
+            return new ObjectResult(results);//res ;
+
+
+
         }
 
-        
         [HttpGet("{id}")]
-        public ActionResult<Article> GetArticle([FromRoute] int id)
-        {
-            var article = _articlesRepository.GetArticle(id);
-          
-           return Ok(article);
-            
-        }
-
-        [HttpPut("{id}")]
-        public bool Put(int id,[FromBody] Article article)
+        [Produces(typeof(Article))]
+        public IActionResult GetArticle([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
-                return false;
+                return BadRequest(ModelState);
             }
-            else
+
+            var article =  _articlesRepository.Find(id);
+
+            if (article == null)
             {
-                _articlesRepository.UpdateArticle(id, article);
-                return true;
+                return NotFound();
             }
-           
+
+            return Ok(article);
         }
 
-        [HttpDelete]
-        public void DeleteEntry(int id)
+        [HttpPut("{id}")]
+        [Produces(typeof(Article))]
+        public IActionResult PutArticle([FromRoute]int id, [FromBody] Article article)
         {
-            _articlesRepository.DeleteArticle(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != article.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                _articlesRepository.UpdateArticle(article);
+                return Ok(article);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArticleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
         }
 
-       
+        [HttpDelete("{id}")]
+        [Produces(typeof(Article))]
+        public IActionResult DeleteArticle([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (! ArticleExists(id))
+            {
+                return NotFound();
+            }
+
+            _articlesRepository.Remove(id);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Produces(typeof(Article))]
+        public IActionResult PostArticle([FromBody] Article article)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _articlesRepository.Add(article);
+
+            return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+        }
+
+
+
+
 
 
 

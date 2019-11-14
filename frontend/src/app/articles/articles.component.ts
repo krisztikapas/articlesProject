@@ -18,8 +18,10 @@ export class ArticlesComponent implements OnInit {
 constructor(private service: ApiService, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.service.getArticles().subscribe((data) => {
+    this.service.getArticlesWithCategory().subscribe((data) => {
       console.log("Data: - ", data);
+     // console.log("categoryName ", d);
+
       this.dataSource = new MatTableDataSource<ArticleElement>(data as ArticleElement[])
   })
   }
@@ -28,11 +30,11 @@ constructor(private service: ApiService, private dialog: MatDialog) { }
     console.log(article);
     this.dialog.open(UpdateArticleComponent, {
       data: {
-        Id: article.Id,
-        Title: article.Title,
-        Description: article.Description,
-        Category: article.Category,
-        Date: article.Date
+        id: article.id,
+        title: article.title,
+        description: article.description,
+        category: article.category,
+        createdDateTime: article.createdDateTime
       }
     });
   }

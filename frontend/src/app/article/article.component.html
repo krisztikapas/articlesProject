@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-title>
+      <span *ngIf ="article.id">Edit Article</span>
+      <span *ngIf ="!article.id">New Article</span>
+    </mat-card-title>
+<mat-card-content>
+<form>
+    <mat-form-field class="fullWidth">
+      <input [(ngModel)]="article.title" name ="title" matInput placeholder="Title">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <input [(ngModel)]="article.description" name ="description" matInput placeholder="Description">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+        <input [(ngModel)]="article.category" name ="category" matInput placeholder="Category">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+        <input [(ngModel)]="article.createdDateTime" name ="createdDateTime" matInput placeholder="Date">
+    </mat-form-field>
+
+</form>
+</mat-card-content>
+<mat-card-actions>
+        <button *ngIf="article.id" (click)="api.putArticle(article)" mat-button>EDIT</button>
+        <button *ngIf="article.id" (click)="article = {}" mat-button>NEW</button>
+        <button *ngIf="!article.id" (click)="post(article)" mat-button>POST</button>
+</mat-card-actions>
+</mat-card>
+
+  

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ArticlesProjectDataAccess.Interfaces
 {
     public interface IArticlesRepository
     {
-        IEnumerable<Article> GetArticles();
-        void UpdateArticle(int id, Article article);
-        void DeleteArticle(int id);
-        Article GetArticle(int id);
+        Article Add(Article article);
+        IEnumerable<Article> GetAll();
+        Article Find(int id);
+        Article UpdateArticle(Article article);
+        Article Remove(int id);
+        bool Exist(int id);
     }
 }

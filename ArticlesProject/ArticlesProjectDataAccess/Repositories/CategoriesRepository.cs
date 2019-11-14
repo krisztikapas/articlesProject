@@ -1,6 +1,7 @@
 ﻿using ArticlesProjectDataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ArticlesProjectDataAccess.Repositories
@@ -13,6 +14,11 @@ namespace ArticlesProjectDataAccess.Repositories
         {
             var categories = context.Categories;
             return categories;
+        }
+
+        public Category Find(int id)
+        {
+            return context.Categories.FirstOrDefault(n => n.Id == id);
         }
     }
 }

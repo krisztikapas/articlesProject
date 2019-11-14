@@ -30,5 +30,24 @@ namespace ArticlesProject.Controllers
         {
             return _categoriesRepository.GetCategories();
         }
+
+        [HttpGet("{id}")]
+        [Produces(typeof(Category))]
+        public IActionResult GetCategory([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var category = _categoriesRepository.Find(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
     }
 }

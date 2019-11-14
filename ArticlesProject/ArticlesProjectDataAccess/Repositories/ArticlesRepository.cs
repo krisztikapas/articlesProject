@@ -1,9 +1,12 @@
 ﻿using ArticlesProjectDataAccess.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ArticlesProjectDataAccess.Repositories
 {
@@ -11,82 +14,41 @@ namespace ArticlesProjectDataAccess.Repositories
     {
         private AppDbContext context = new AppDbContext();
 
-        //public void AddArticle(Article article)
-        //{
-        //    this.context.Add(article);
-        //    context.SaveChanges();
-        //}
-
-        public IEnumerable<Article> GetArticles()
+        public Article Add(Article article)
         {
-            var articles = context.Articles;
-            return articles;
+            context.Articles.Add(article);
+            context.SaveChanges();
+            return article;
         }
 
-        public Article GetArticle(int id)
+        public bool Exist(int id)
         {
-           
-                using (var context = new AppDbContext())
-                {
-                    var article = context.Articles.FirstOrDefault(n => n.Id == id);
-                    //if (entry == null)
-                    //{
-                    //    return NotFound();
-                    //}
-                    return article;
-                }
-           
-            
-
+            return context.Articles.Any(c => c.Id == id);
         }
 
-        public void UpdateArticle(int id, Article article)
+        public Article Find(int id)
         {
-          
-            try
-            {
-                using (var context = new AppDbContext())
-                {
-                    Article oldArticle = context.Articles.FirstOrDefault(n => n.Id == id);
-                    oldArticle.Title = article.Title;
-                    oldArticle.Description = article.Description;
-                    oldArticle.Category = article.Category;
-                    oldArticle.CreatedDateTime = article.CreatedDateTime;
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-
+            return context.Articles.FirstOrDefault(n => n.Id == id);
         }
 
-
-        public void DeleteArticle(int id)
+        public IEnumerable<Article> GetAll()
         {
-            try
-            {
-                using (var context = new AppDbContext())
-                {
-                    var article = context.Articles.FirstOrDefault(n => n.Id == id);
-                    if (article != null)
-                    {
-                        context.Articles.Remove(article);
-                        context.SaveChanges();
-                    }
-                    
-                    
-                    //return Ok("Entry deleted!");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                //return BadRequest(ex.Message);
-            }
+            return context.Articles;
         }
 
+        public Article Remove(int id)
+        {
+            var article =  context.Articles.Single(a => a.Id == id);
+            context.Articles.Remove(article);
+            context.SaveChanges();
+            return article;
+        }
 
-
+        public Article UpdateArticle(Article article)
+        {
+            context.Articles.Update(article);
+            context.SaveChanges();
+            return article;
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace ArticlesProjectDataAccess.Interfaces
     public interface ICategoriesRepository
     {
         IEnumerable<Category> GetCategories();
+        Category Find(int id);
     }
 }

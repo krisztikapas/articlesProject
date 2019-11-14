@@ -17,7 +17,7 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 //my services
 import {ApiService} from './api.service'
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import {
@@ -37,6 +37,8 @@ import {
  } from '@angular/material';
 import { UpdateArticleComponent } from './update-article/update-article.component';
 import { DeleteArticleComponent } from './delete-article/delete-article.component';
+import { HttpClient } from 'selenium-webdriver/http';
+import { ArticleComponent } from './article/article.component';
 
 
 
@@ -49,7 +51,8 @@ import { DeleteArticleComponent } from './delete-article/delete-article.componen
     FooterComponent,
     CategoriesComponent,
     UpdateArticleComponent,
-    DeleteArticleComponent
+    DeleteArticleComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,
