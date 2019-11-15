@@ -35,6 +35,12 @@ export class ApiService {
         }) 
     }
 
+    putCategory(category) {
+      this.http.put(`https://localhost:44331/api/categories/${category.id}`, category).subscribe(res => {
+            console.log(res)
+        }) 
+    }
+
   getArticles(){
     return this.http.get('https://localhost:44331/api/articles');
     //var result1 = this.http.get(`https://localhost:44331/api/categories/${id}`);
