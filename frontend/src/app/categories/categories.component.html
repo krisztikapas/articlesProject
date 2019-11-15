@@ -1,11 +1,10 @@
-<app-category></app-category>
 <mat-card>
   <mat-card-content>
-  
+    <h2>Categories list:</h2>
   </mat-card-content>
   <mat-card-actions>
       <mat-list *ngFor="let category of categories">
       <mat-list-item class="clickLink" (click)="api.selectCategory(category)"> {{category.name}} </mat-list-item>
       </mat-list>
   </mat-card-actions>
-    </mat-card>
+</mat-card>

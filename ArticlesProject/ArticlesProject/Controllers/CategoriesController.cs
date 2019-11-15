@@ -11,6 +11,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Data.Entity.Infrastructure;
 using System.Web.Http.ModelBinding;
+using System;
 
 namespace ArticlesProject.Controllers
 {
@@ -61,6 +62,7 @@ namespace ArticlesProject.Controllers
                 return BadRequest(ModelState);
             }
 
+            category.CreatedDateTime = DateTime.Now;
             _categoriesRepository.Add(category);
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
