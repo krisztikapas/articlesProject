@@ -20,5 +20,12 @@ namespace ArticlesProjectDataAccess.Repositories
         {
             return context.Categories.FirstOrDefault(n => n.Id == id);
         }
+
+        public Category Add(Category category)
+        {
+            context.Categories.Add(category);
+            context.SaveChanges();
+            return category;
+        }
     }
 }

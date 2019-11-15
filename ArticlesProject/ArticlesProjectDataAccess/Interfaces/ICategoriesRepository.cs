@@ -8,5 +8,7 @@ namespace ArticlesProjectDataAccess.Interfaces
     {
         IEnumerable<Category> GetCategories();
         Category Find(int id);
+
+        Category Add(Category category);
     }
 }

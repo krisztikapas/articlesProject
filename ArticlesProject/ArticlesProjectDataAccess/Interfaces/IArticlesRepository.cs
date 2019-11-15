@@ -10,7 +10,7 @@ namespace ArticlesProjectDataAccess.Interfaces
         Article Add(Article article);
         IEnumerable<Article> GetAll();
         Article Find(int id);
-        Article UpdateArticle(Article article);
+        void UpdateArticle(Article article);
         Article Remove(int id);
         bool Exist(int id);
     }

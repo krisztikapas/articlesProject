@@ -1,21 +1,24 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ApiService } from '../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryElement } from '../interfaces/CategoryElement';
 
 @Component({
   selector: 'app-update-article',
   templateUrl: './update-article.component.html',
   styleUrls: ['./update-article.component.css']
 })
-export class UpdateArticleComponent {
+export class UpdateArticleComponent{
 
   form: FormGroup;
   id: number;
+  item;
 
   constructor(private fb: FormBuilder,
     private service:ApiService,
+    private router: Router,
     private route:ActivatedRoute,
      private dialogRef: MatDialogRef<UpdateArticleComponent>,
      @Inject(MAT_DIALOG_DATA){title ,description, category, createdDateTime, id}) {
@@ -29,21 +32,30 @@ export class UpdateArticleComponent {
       })
     
       }
-
+      
+      /*types: CategoryElement[] = [
+        this.service.getCategories().subscribe(data, =>{
+          console.log("types", data );
+        })
+      ]*/
 
       close(){
-        console.log("close click");
         this.dialogRef.close();
+        this.router.navigate(['/'])
       }
 
       save(){
-        //this.id = this.route.snapshot.paramMap.get('id');
-        this.form.value.id = this.id;
-        console.log("save click");
-        this.service.updateArticle(this.id, this.form.value).subscribe((data)=>{
+         
+        
+        this.form.value.id = this.id;        
+        console.log(this.form.value.id);
+        this.service.updateArticle(this.id,this.form.value).subscribe((data)=>{
           console.log('Data - ', data);
         })
-        //console.log(this.id);
+        
       }
+      
+
+     
 
 }

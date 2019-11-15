@@ -23,7 +23,7 @@ namespace ArticlesProject.Controllers
         private readonly ICategoriesRepository _categoriesRepository;
 
 
-        public ArticlesController( IArticlesRepository articlesRepository,ICategoriesRepository categoriesRepository)
+        public ArticlesController(IArticlesRepository articlesRepository, ICategoriesRepository categoriesRepository)
         {
             _articlesRepository = articlesRepository;
             _categoriesRepository = categoriesRepository;
@@ -32,27 +32,11 @@ namespace ArticlesProject.Controllers
 
         private bool ArticleExists(int id)
         {
-            return  _articlesRepository.Exist(id);
+            return _articlesRepository.Exist(id);
         }
 
-        //[HttpGet]
-        //[Produces(typeof(DbSet<Article>))]
-        //public IActionResult GetArticle()
-        //{
-        //    var results = new ObjectResult(_articlesRepository.GetAll())
-        //    {
-        //        StatusCode = (int)HttpStatusCode.OK
-        //    };
-
-
-        //    Request.HttpContext.Response.Headers.Add("X-Total-Count", _articlesRepository.GetAll().Count().ToString());
-
-        //    return results;
-        //}
-
         [HttpGet]
-       // [Produces(typeof(DbSet<Article>))]
-        public IActionResult GetArticlesWithCategoryName()
+        public IActionResult GetArticle()
         {
             var results = _articlesRepository.GetAll();
             if (results != null)
@@ -61,15 +45,9 @@ namespace ArticlesProject.Controllers
                 {
                     item.Category = _categoriesRepository.Find(item.CategoryId);
                 }
-                // StatusCode =(int)HttpStatusCode.OK;
-               
+
             }
-            //Request.HttpContext.Response.Headers.Add("X-Total-Count", _articlesRepository.GetAll().Count().ToString());
-            var res = results.ToList();
-            return new ObjectResult(results);//res ;
-
-
-
+            return new ObjectResult(results);
         }
 
         [HttpGet("{id}")]
@@ -81,7 +59,7 @@ namespace ArticlesProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            var article =  _articlesRepository.Find(id);
+            var article = _articlesRepository.Find(id);
 
             if (article == null)
             {
@@ -92,17 +70,21 @@ namespace ArticlesProject.Controllers
         }
 
         [HttpPut("{id}")]
-        [Produces(typeof(Article))]
-        public IActionResult PutArticle([FromRoute]int id, [FromBody] Article article)
+      //  [Produces(typeof(Article))]
+        public IActionResult PutArticle(int id,[FromBody] Article article)
         {
+            //var id = article.Id;
+        //    Article article = new Article
+        //    {
+        //        Id = 7,
+        //        Title = "kicsikutya",
+        //        CategoryId =1,
+        
+              
+           // };
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != article.Id)
-            {
-                return BadRequest();
             }
 
             try

@@ -33,7 +33,7 @@ constructor(private service: ApiService, private dialog: MatDialog) { }
         id: article.id,
         title: article.title,
         description: article.description,
-        category: article.category,
+        category: article.category.name,
         createdDateTime: article.createdDateTime
       }
     });

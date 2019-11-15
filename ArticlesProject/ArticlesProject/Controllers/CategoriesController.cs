@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using ArticlesProjectDataAccess;
+using Microsoft.Extensions.Logging;
+using ArticlesProjectDataAccess.Interfaces;
+using ArticlesProjectDataAccess.Repositories;
+using Microsoft.AspNetCore.Cors;
 using System.Linq;
 using System.Threading.Tasks;
-using ArticlesProjectDataAccess;
-using ArticlesProjectDataAccess.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Data.Entity;
+using System.Net;
+using System.Data.Entity.Infrastructure;
+using System.Web.Http.ModelBinding;
 
 namespace ArticlesProject.Controllers
 {
@@ -14,18 +18,16 @@ namespace ArticlesProject.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ILogger<CategoriesController> _logger;
         private ICategoriesRepository _categoriesRepository;
 
-        public CategoriesController(ILogger<CategoriesController> logger, ICategoriesRepository categoriesRepository)
+        public CategoriesController(ICategoriesRepository categoriesRepository)
         {
-            _logger = logger;
             _categoriesRepository = categoriesRepository;
 
         }
 
-       //GET: api/Categories
-       [HttpGet]
+        //GET: api/Categories
+        [HttpGet]
         public IEnumerable<Category> Get()
         {
             return _categoriesRepository.GetCategories();
@@ -49,5 +51,21 @@ namespace ArticlesProject.Controllers
 
             return Ok(category);
         }
+
+        [HttpPost]
+        [Produces(typeof(Category))]
+        public IActionResult PostCategory([FromBody] Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _categoriesRepository.Add(category);
+
+            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+        }
     }
+
+
 }

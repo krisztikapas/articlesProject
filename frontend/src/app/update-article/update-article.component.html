@@ -8,10 +8,14 @@
                 <input matInput placeholder="Entry description" formControlName="description">
             </mat-form-field>
             <br>    
-            <mat-form-field class="new-entry-field">
-                <input matInput placeholder="Entry category" formControlName="category">
-             </mat-form-field>
-             <br>
+            <mat-form-field class="new-entry-field" >
+                <mat-select placeholder="Entry category" formControlName="category">
+                    <mat-option *ngFor="let item of list" [value]="item">
+                       {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
             <mat-form-field class="new-entry-field">
                 <input matInput placeholder="Entry date" formControlName="date">
             </mat-form-field>
