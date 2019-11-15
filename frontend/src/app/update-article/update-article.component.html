@@ -10,8 +10,8 @@
             <br>    
             <mat-form-field class="new-entry-field" >
                 <mat-select placeholder="Entry category" formControlName="category">
-                    <mat-option *ngFor="let item of list" [value]="item">
-                       {{item.name}}
+                    <mat-option *ngFor="let type of types" [value]="type">
+                       {{type.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

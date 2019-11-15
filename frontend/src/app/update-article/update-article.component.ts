@@ -14,7 +14,6 @@ export class UpdateArticleComponent{
 
   form: FormGroup;
   id: number;
-  item;
 
   constructor(private fb: FormBuilder,
     private service:ApiService,
@@ -30,14 +29,14 @@ export class UpdateArticleComponent{
         category: [category, Validators.required],
         date: [createdDateTime, Validators.required]
       })
-    
       }
       
-      /*types: CategoryElement[] = [
-        this.service.getCategories().subscribe(data, =>{
-          console.log("types", data );
-        })
-      ]*/
+      
+      types:Array<Object> = [
+        this.service.getCategories().subscribe(data =>{
+          //console.log("category name", this.types)
+          console.log("types", data);
+        })]
 
       close(){
         this.dialogRef.close();
@@ -45,14 +44,11 @@ export class UpdateArticleComponent{
       }
 
       save(){
-         
-        
         this.form.value.id = this.id;        
         console.log(this.form.value.id);
         this.service.updateArticle(this.id,this.form.value).subscribe((data)=>{
           console.log('Data - ', data);
-        })
-        
+        })  
       }
       
 

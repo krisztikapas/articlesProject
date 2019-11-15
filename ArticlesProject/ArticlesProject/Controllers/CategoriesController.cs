@@ -65,6 +65,38 @@ namespace ArticlesProject.Controllers
 
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
+
+        private bool CategoryExists(int id)
+        {
+            return _categoriesRepository.Exist(id);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult PutCategory(int id, [FromBody] Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _categoriesRepository.UpdateCategory(category);
+                return Ok(category);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
     }
 
 

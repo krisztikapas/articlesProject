@@ -73,15 +73,6 @@ namespace ArticlesProject.Controllers
       //  [Produces(typeof(Article))]
         public IActionResult PutArticle(int id,[FromBody] Article article)
         {
-            //var id = article.Id;
-        //    Article article = new Article
-        //    {
-        //        Id = 7,
-        //        Title = "kicsikutya",
-        //        CategoryId =1,
-        
-              
-           // };
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

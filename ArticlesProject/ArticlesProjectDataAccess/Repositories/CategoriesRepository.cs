@@ -27,5 +27,18 @@ namespace ArticlesProjectDataAccess.Repositories
             context.SaveChanges();
             return category;
         }
+
+        public bool Exist(int id)
+        {
+            return context.Categories.Any(c => c.Id == id);
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            var oldCategory = context.Categories.Find(category.Id);
+            oldCategory.Name = category.Name;
+            context.SaveChanges();
+
+        }
     }
 }

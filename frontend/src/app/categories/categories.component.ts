@@ -12,16 +12,19 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class CategoriesComponent implements OnInit{
 
-  displayedColumns: string[] = ['name', 'date']
-  dataSource;
+  category={}
+  categories
+  id;
+  constructor(private api:ApiService, private route: ActivatedRoute){
 
-  constructor(private api: ApiService) {}
+    }
 
-  ngOnInit() {
-    this.api.getCategories().subscribe((data) => {
-      console.log("Data: - ", data);
-      this.dataSource = new MatTableDataSource<CategoryElement>(data as CategoryElement[])
-  })
-  }
+    ngOnInit(){
+        //this.id = this.route.snapshot.paramMap.get('id')
+        this.api.getCategories().subscribe(data => {
+            console.log("data", data)
+            this.categories=data
+        })
+    }
 
 }

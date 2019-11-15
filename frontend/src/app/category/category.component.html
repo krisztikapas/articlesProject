@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-title>
+        <span *ngIf ="category.id">Edit Category</span>
+        <span *ngIf ="!category.id">New Category</span>
+    </mat-card-title>
+<mat-card-content>
+<form>
+    <mat-form-field class="fullWidth">
+      <input [(ngModel)]="category.name" name ="category" matInput placeholder="Name">
+    </mat-form-field>
+</form>
+</mat-card-content>
+<mat-card-actions>
+        <button (click)="post(category)" mat-button>POST</button>
+</mat-card-actions>
+</mat-card>
+  
