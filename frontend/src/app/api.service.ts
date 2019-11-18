@@ -21,8 +21,8 @@ export class ApiService {
   baseUrl:string = 'https://localhost:44331/api/articles'
   constructor(private http: HttpClient) { }
 
-   postArticle(article){
-        return this.http.post('https://localhost:44331/api/articles', article);
+   postArticle(article){  
+        return this.http.post('https://localhost:44331/api/articles',  article);
     }
 
   postCategory(category){
@@ -48,7 +48,7 @@ export class ApiService {
   }
 
   getArticlesWithCategory(){
-    return this.http.get('https://localhost:44331/api/articles');
+    return this.http.get<any[]>('https://localhost:44331/api/articles');
     //var result1 = this.http.get(`https://localhost:44331/api/categories/${id}`);
      
   }
@@ -59,6 +59,10 @@ export class ApiService {
 
   getCategory(id){
     return this.http.get(`https://localhost:44331/api/categories/${id}`);
+}
+
+getCategoryIdByName(name){
+  return this.http.get(`https://localhost:44331/api/categories/${name}`);
 }
 
   getCategories(){

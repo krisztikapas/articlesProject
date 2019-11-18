@@ -40,5 +40,15 @@ namespace ArticlesProjectDataAccess.Repositories
             context.SaveChanges();
 
         }
+
+        public int FindByName(string name)
+        {
+            Category category = context.Categories.Where(n => n.Name == name).FirstOrDefault();
+            if (category == null)
+            {
+                return -1;
+            }
+            return category.Id;
+        }
     }
 }

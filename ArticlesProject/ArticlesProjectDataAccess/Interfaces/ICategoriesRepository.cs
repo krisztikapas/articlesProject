@@ -14,5 +14,6 @@ namespace ArticlesProjectDataAccess.Interfaces
 
         void UpdateCategory(Category category);
         bool Exist(int id);
+        int FindByName(string name);
     }
 }

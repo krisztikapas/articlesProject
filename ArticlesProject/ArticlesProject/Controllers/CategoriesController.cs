@@ -53,6 +53,25 @@ namespace ArticlesProject.Controllers
             return Ok(category);
         }
 
+        [HttpGet("{name}")]
+        [Produces(typeof(Category))]
+        public IActionResult GetCategoryIdByName([FromBody] string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            int categoryId = _categoriesRepository.FindByName(name);
+
+            if (categoryId == -1)
+            {
+                return NotFound();
+            }
+
+            return Ok(categoryId);
+        }
+
         [HttpPost]
         [Produces(typeof(Category))]
         public IActionResult PostCategory([FromBody] Category category)

@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-card-content>
+      <h2>Articles list:</h2>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-list *ngFor="let article of articles">
+        <mat-list-item class="clickLink" (click)="api.selectArticle(article)"> {{article.title}} </mat-list-item>
+        </mat-list>
+    </mat-card-actions>
+  </mat-card>

@@ -40,6 +40,7 @@ import { DeleteArticleComponent } from './delete-article/delete-article.componen
 import { HttpClient } from 'selenium-webdriver/http';
 import { ArticleComponent } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
+import { NewArticlesComponent } from './new-articles/new-articles.component';
 
 
 
@@ -54,7 +55,8 @@ import { CategoryComponent } from './category/category.component';
     UpdateArticleComponent,
     DeleteArticleComponent,
     ArticleComponent,
-    CategoryComponent
+    CategoryComponent,
+    NewArticlesComponent
   ],
   imports: [
     BrowserModule,

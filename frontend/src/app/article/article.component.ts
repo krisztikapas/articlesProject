@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import {ApiService} from '../api.service'
 import { ActivatedRoute } from '@angular/router'
 
@@ -10,21 +10,38 @@ import { ActivatedRoute } from '@angular/router'
 export class ArticleComponent implements OnInit {
 
   article = {}
-  articleId
-  constructor(private api:ApiService, private route: ActivatedRoute) { }
+  articleId;
+  types;
+  
+  
+  constructor(private api:ApiService, private route: ActivatedRoute) { 
+    this.api.getCategories().subscribe(data =>{
+      //this.types = data;
+      this.types = data;
+      console.log(data)
+    });
+    
+  }
 
-ngOnInit() {
-    this.articleId = this.route.snapshot.paramMap.get('articleId')
-    console.log(this.articleId);
+
+  ngOnInit() {
+    //this.categoryId = this.route.snapshot.paramMap.get('categoryId')
+    //console.log("Article " + this.article)
     this.api.articleSelected.subscribe(article => this.article = article)
+
+    
+
 }
 
 post(article) {
-    article.articleId = Number(this.articleId)
-    console.log(article.articleId);
+    //article.articleId = Number(this.articleId)
+    //console.log(article.articleId);
+    //console.log("types", this.articleId);
+    //this.api.getCategoryIdByName(article.category.name)
     this.api.postArticle(article).subscribe(data => {
       console.log("Data - ", data);
     })
+    
 }
 
 }

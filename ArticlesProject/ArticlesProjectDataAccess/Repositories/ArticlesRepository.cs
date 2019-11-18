@@ -17,7 +17,11 @@ namespace ArticlesProjectDataAccess.Repositories
         public Article Add(Article article)
         {
             context.Articles.Add(article);
-            context.SaveChanges();
+            if (article.CategoryId != null)
+            {
+                context.SaveChanges();
+            }
+            
             return article;
         }
 
