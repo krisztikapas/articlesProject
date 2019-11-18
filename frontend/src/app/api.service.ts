@@ -16,7 +16,7 @@ export class ApiService {
 
   private selectedCategory = new Subject<any>();
   categorySelected = this.selectedCategory.asObservable();
-
+  //console.log(categorySelected);
 
   baseUrl:string = 'https://localhost:44331/api/articles'
   constructor(private http: HttpClient) { }
@@ -66,7 +66,7 @@ getCategoryIdByName(name){
 }
 
   getCategories(){
-    return this.http.get('https://localhost:44331/api/categories');
+    return this.http.get('https://localhost:44331/api/categories/');
   }
 
  

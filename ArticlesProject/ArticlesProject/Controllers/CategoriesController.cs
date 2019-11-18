@@ -33,6 +33,12 @@ namespace ArticlesProject.Controllers
         {
             return _categoriesRepository.GetCategories();
         }
+        [Route("GetGategoriesList")]
+        [HttpGet]
+        public IEnumerable<string> GetGategoriesList()
+        {
+            return _categoriesRepository.GetCategories().Select(p=>p.Name);
+        }
 
         [HttpGet("{id}")]
         [Produces(typeof(Category))]
