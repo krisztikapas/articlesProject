@@ -97,6 +97,38 @@ namespace ArticlesProject.Controllers
 
         }
 
+        [Route("PutArticleAndUpdateCategory")]
+      //  [HttpPut]
+        //  [Produces(typeof(Article))]
+        public IActionResult PutArticleAndUpdateCategory([FromQuery]int id, [FromBody] Article article)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+
+                article.Category = _categoriesRepository.Find(id);
+
+                _articlesRepository.UpdateArticle(article);
+                return Ok(article);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArticleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+        }
+
         [HttpDelete("{id}")]
         [Produces(typeof(Article))]
         public IActionResult DeleteArticle([FromRoute] int id)

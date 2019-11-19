@@ -12,23 +12,12 @@
     <input [(ngModel)]="article.description" name ="description" matInput placeholder="Description">
   </mat-form-field>
   <mat-form-field class="fullWidth" >
-    <mat-select placeholder="Entry category"   [(ngModel)]="selectedValue" name="selectedItem">
-      <mat-option *ngFor="let type of types" [value]="type.value">
-           {{type}}
+    <mat-select placeholder="Entry category"  [(ngModel)]="nameId" name="id" (change)="selectName();">
+      <mat-option *ngFor="let k of nameList" [value]="k.id">
+           {{k.name}}
         </mat-option>
-    </mat-select>
-    
+    </mat-select>    
 </mat-form-field>
-<p> Selected value: {{selectedValue}} </p>
-
-<div class="col-sm-8 col-md-4">  
-    <select id="Id" #Id="ngModel" class="hideLabel form-control" [(ngModel)]="nameId" name="Id" (change)="selectName();">  
-            <option selected="" value=""></option>  
-         <option [ngValue]="k.id" *ngFor="let k of nameList">  
-             {{k.name}}  
-      </option>  
- </select>  
-</div>  
 </form>
 </mat-card-content>
 <mat-card-actions>

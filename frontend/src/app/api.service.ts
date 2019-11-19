@@ -4,6 +4,8 @@ import {Subject} from 'rxjs'
 import { ArticleComponent } from './article/article.component';
 import { $ } from 'protractor';
 import { Options } from 'selenium-webdriver/edge';
+import { ArticleElement } from './interfaces/ArticleElement';
+import { CategoryElement } from './interfaces/CategoryElement';
 
 
 @Injectable({
@@ -61,8 +63,9 @@ export class ApiService {
     return this.http.get(`https://localhost:44331/api/categories/${id}`);
 }
 
-getCategoryIdByName(name){
-  return this.http.get(`https://localhost:44331/api/categories/${name}`);
+getCategoryIdByName(category){
+  console.log("category", category)
+  return this.http.get(`https://localhost:44331/api/categories/GetCategoryIdByName?name=${category.name}`);
 }
 
   getCategories(){
@@ -75,11 +78,23 @@ getCategoryIdByName(name){
   var id= article.id;
   var title = article.title;
   var description = article.description;
-  var category = article.category.name;
+  var category = article.category;
   var catId = article.category.id;
-
   return this.http.put(`https://localhost:44331/api/articles/${id}`, {id, title, description, category, catId})
   
+  }
+  updateArticleFromPopup(catId,article){
+    var newarticle = article as ArticleElement;
+    console.log("newarticle" + newarticle)
+    console.log("my articleId" + article.id)
+    var id= article.id;
+    console.log("my articleTitle" + article.id)
+    var title = article.title;
+    var description = article.description;
+
+    var category = article.category;
+    
+    return this.http.put(`https://localhost:44331/api/articles/PutArticleAndUpdateCategory?id=${catId}`, {id, title, description, category,catId})
   }
 
   deleteArticle(id){

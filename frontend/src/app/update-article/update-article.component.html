@@ -9,11 +9,12 @@
             </mat-form-field>
             <br>    
             <mat-form-field class="new-entry-field" >
-                <mat-select placeholder="Entry category" formControlName="category">
-                    <mat-option *ngFor="let type of types" [value]="type">
-                       {{type.name}}
+                <mat-select placeholder="Entry category"  [(value)]="categoryId" id="id" name="id" (change)="selectName();">
+                  <mat-option selected="" value=""></mat-option>
+                    <mat-option *ngFor="let k of nameList" [value]="k.id">
+                       {{k.name}}
                     </mat-option>
-                </mat-select>
+                </mat-select>    
             </mat-form-field>
             <br>
             <mat-form-field class="new-entry-field">
@@ -22,6 +23,6 @@
             <br>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
     <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
 </mat-dialog-actions>

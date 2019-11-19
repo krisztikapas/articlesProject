@@ -15,7 +15,7 @@ using System;
 
 namespace ArticlesProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -58,10 +58,10 @@ namespace ArticlesProject.Controllers
 
             return Ok(category);
         }
-
-        [HttpGet("{name}")]
-        [Produces(typeof(Category))]
-        public IActionResult GetCategoryIdByName([FromBody] string name)
+        [Route("GetCategoryIdByName")]
+        //[HttpGet("{name}")]
+        //[Produces(typeof(Category))]
+        public IActionResult GetCategoryIdByName([FromQuery] string name)
         {
             if (!ModelState.IsValid)
             {

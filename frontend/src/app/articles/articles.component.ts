@@ -30,18 +30,20 @@ constructor(private service: ApiService, private dialog: MatDialog) { }
   })
   }
 
+  
+
   applyFilter(filterValue: string){
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   updateArticle(article){
-    console.log(article);
+    //console.log(article);
     this.dialog.open(UpdateArticleComponent, {
       data: {
         id: article.id,
         title: article.title,
         description: article.description,
-        category: article.category.name,
+        category: article.category,
         createdDateTime: article.createdDateTime
       }
     });
