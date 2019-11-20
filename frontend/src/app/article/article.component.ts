@@ -9,20 +9,15 @@ import { ActivatedRoute } from '@angular/router'
 })
 export class ArticleComponent implements OnInit {
 
-  article = {}
-  articleId;
-  countryValue;
-  selectedValue: string;
   nameList;
   data;
-  nameId;
-  
+  categoryId;
+  article = {}
   constructor(private api:ApiService, private route: ActivatedRoute) { 
     this.api.getCategories().subscribe(mydata =>{
 
       this.data = mydata;
       this.nameList =mydata;
-      console.log("category "+ this.nameList)
     });
 
   }
@@ -33,17 +28,23 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.articleSelected.subscribe(article => this.article = article)
+    this.api.articleSelected.subscribe(article => {
+      this.article = article,
+      this.categoryId = article["categoryId"]
+    }
+      )
 
 }
 
 post(article) {
-   article.categoryId = this.nameId;
-    this.api.postArticle(article).subscribe(data => {
-      console.log("Data - ", data ,"selected",this.nameId);
-    })
+   article.categoryId = this.categoryId;
+    this.api.postArticle(article).subscribe()
     window.location.reload();
     
+}
+
+resetCategory(){
+  this.categoryId=null;
 }
 
 }

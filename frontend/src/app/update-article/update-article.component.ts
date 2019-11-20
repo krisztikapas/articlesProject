@@ -31,12 +31,15 @@ export class UpdateArticleComponent implements OnInit{
      @Inject(MAT_DIALOG_DATA){title ,description, category, createdDateTime, id}) {
        this.id = id;
        this.categoryName = category;
+       console.log("update",title ,description, category, createdDateTime, id);
+       this.categoryId=category["id"]
        
         this.form = fb.group ({
         title: [title, Validators.required],
         description: [description, Validators.required],
         category: [category, Validators.required],
-        date: [createdDateTime, Validators.required]
+        date: [{value: createdDateTime,disabled:true}]
+        
       });
 
       this.service.getCategories().subscribe(mydata =>{
@@ -49,7 +52,7 @@ export class UpdateArticleComponent implements OnInit{
       this.service.getCategoryIdByName(this.categoryName).subscribe(result => {
         this.nameId = result;
       });
-      this.selectName();
+    //  this.selectName();
     }
   
       
@@ -58,15 +61,14 @@ export class UpdateArticleComponent implements OnInit{
     this.nameList= this.data;   
   }
 
-  selectName()
+  /*selectName()
 {
   //alert(this.categoryId);
-}  
+} */ 
 
   ngOnInit() {
-    this.service.categorySelected.subscribe(item =>
-       {this.article = item,
-        item.categoryId=this.categoryId })
+    this.service.categorySelected.subscribe(item =>{
+       this.article = item})
 }
 
 

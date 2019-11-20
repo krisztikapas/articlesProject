@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Net;
 using System.Data.Entity.Infrastructure;
+using System;
 
 namespace ArticlesProject.Controllers
 {
@@ -156,7 +157,8 @@ namespace ArticlesProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            article.CreatedDateTime = DateTime.Now;
+            
             _articlesRepository.Add(article);
 
             return CreatedAtAction("GetArticle", new { id = article.Id }, article);
