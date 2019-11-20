@@ -14,7 +14,7 @@ const routes:Routes =[
   {path: 'article', component:ArticleComponent},
   {path: 'categories', component:CategoriesComponent},
   {path: 'delete-article/:id', component:DeleteArticleComponent},
-  {path: 'category', component:CategoryComponent}
+  {path: 'category', component:CategoryComponent},
 
 ]
 

@@ -142,8 +142,8 @@ namespace ArticlesProject.Controllers
             {
                 return NotFound();
             }
-
             _articlesRepository.Remove(id);
+
 
             return Ok();
         }

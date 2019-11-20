@@ -17,7 +17,6 @@ export class NewArticlesComponent implements OnInit {
     }
 
     ngOnInit(){
-        //this.id = this.route.snapshot.paramMap.get('id')
         this.api.getArticles().subscribe(data => {
             console.log("data", data)
             this.articles=data

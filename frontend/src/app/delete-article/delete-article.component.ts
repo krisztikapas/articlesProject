@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import { CategoryElement } from '../interfaces/CategoryElement';
+import { ArticleElement } from '../interfaces/ArticleElement';
 
 @Component({
   selector: 'app-delete-article',
@@ -14,12 +16,15 @@ export class DeleteArticleComponent implements OnInit {
     title:'',
     description:'',
     category:'',
-    date:''
+    date:'',
+    categoryId:''
   }
   message:string
 
   constructor(private route:ActivatedRoute, private service:ApiService,
-    private router:Router) { }
+    private router:Router) {
+
+     }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -27,22 +32,32 @@ export class DeleteArticleComponent implements OnInit {
       console.log("Data - ", data);
       this.article.title=data.title;
       this.article.description=data.description;
-      this.article.category=data.category;
+      this.article.categoryId = data.categoryId;
+      //this.article.category=data.category;
       this.article.date = data.createdDateTime;
-      
+
+      console.log("categoryId", data.categoryId)
+      this.service.getCategory(data.categoryId).subscribe(result => {
+        this.article.category = result["name"];
+      })
 
     })
+
+
+    
+
+    
   }
 
   cancel(){
-    console.log("cancel clicked!");
     this.router.navigate(['/'])
   }
 
   confirm(){
-    //console.log("confirm clicked!");
     this.service.deleteArticle(this.id).subscribe(data => 
       console.log(data));
+      this.router.navigate(['/'])
+      this.service.getArticlesWithCategory().subscribe();
   }
 
 

@@ -14,13 +14,10 @@ export class CategoryComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //this.categoryId = this.route.snapshot.paramMap.get('categoryId')
     this.api.categorySelected.subscribe(category => this.category = category)
 }
 
   post(category) {
-    console.log(category);
-    //category.categoryId = Number(this.categoryId)
     this.api.postCategory(category).subscribe(data => {
       console.log("data:" , data);
     })

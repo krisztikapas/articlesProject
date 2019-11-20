@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
+import {HttpClient} from '@angular/common/http'
 import {Subject} from 'rxjs'
-import { ArticleComponent } from './article/article.component';
-import { $ } from 'protractor';
-import { Options } from 'selenium-webdriver/edge';
 import { ArticleElement } from './interfaces/ArticleElement';
-import { CategoryElement } from './interfaces/CategoryElement';
+import { $ } from 'protractor';
 
 
 @Injectable({
@@ -18,7 +15,6 @@ export class ApiService {
 
   private selectedCategory = new Subject<any>();
   categorySelected = this.selectedCategory.asObservable();
-  //console.log(categorySelected);
 
   baseUrl:string = 'https://localhost:44331/api/articles'
   constructor(private http: HttpClient) { }
@@ -45,13 +41,11 @@ export class ApiService {
 
   getArticles(){
     return this.http.get('https://localhost:44331/api/articles');
-    //var result1 = this.http.get(`https://localhost:44331/api/categories/${id}`);
      
   }
 
   getArticlesWithCategory(){
     return this.http.get<any[]>('https://localhost:44331/api/articles');
-    //var result1 = this.http.get(`https://localhost:44331/api/categories/${id}`);
      
   }
 
@@ -64,7 +58,6 @@ export class ApiService {
 }
 
 getCategoryIdByName(category){
-  console.log("category", category)
   return this.http.get(`https://localhost:44331/api/categories/GetCategoryIdByName?name=${category.name}`);
 }
 
@@ -84,14 +77,9 @@ getCategoryIdByName(category){
   
   }
   updateArticleFromPopup(catId,article){
-    var newarticle = article as ArticleElement;
-    console.log("newarticle" + newarticle)
-    console.log("my articleId" + article.id)
     var id= article.id;
-    console.log("my articleTitle" + article.id)
     var title = article.title;
     var description = article.description;
-
     var category = article.category;
     
     return this.http.put(`https://localhost:44331/api/articles/PutArticleAndUpdateCategory?id=${catId}`, {id, title, description, category,catId})
@@ -108,10 +96,5 @@ getCategoryIdByName(category){
   selectCategory(category){
   this.selectedCategory.next(category)
 }
-
-
-  
-
- 
 
 }

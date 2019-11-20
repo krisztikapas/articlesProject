@@ -1,18 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ApiService } from '../api.service';
+import { ApiService} from '../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryElement } from '../interfaces/CategoryElement';
-import { CategoryComponent } from '../category/category.component';
-import { ArticleElement } from '../interfaces/ArticleElement';
 
 @Component({
   selector: 'app-update-article',
   templateUrl: './update-article.component.html',
   styleUrls: ['./update-article.component.css']
 })
-export class UpdateArticleComponent{
+export class UpdateArticleComponent implements OnInit{
 
   form: FormGroup;
   id: number;
@@ -32,9 +30,7 @@ export class UpdateArticleComponent{
      private dialogRef: MatDialogRef<UpdateArticleComponent>,
      @Inject(MAT_DIALOG_DATA){title ,description, category, createdDateTime, id}) {
        this.id = id;
-        console.log("category---",category);
-        this.categoryName = category;
-        console.log(this.categoryName + "-----")
+       this.categoryName = category;
        
         this.form = fb.group ({
         title: [title, Validators.required],
@@ -42,20 +38,16 @@ export class UpdateArticleComponent{
         category: [category, Validators.required],
         date: [createdDateTime, Validators.required]
       });
-      console.log(title ,description, category.categoryId, createdDateTime, id);
 
       this.service.getCategories().subscribe(mydata =>{
         this.nameList = mydata;
         this.data = mydata;
         category =mydata;
         this.categoryName = category;
-        console.log("category---d-fd--fd- "+ category)
       });
+
       this.service.getCategoryIdByName(this.categoryName).subscribe(result => {
         this.nameId = result;
-             
-        console.log("getElementIdByName", this.nameId, this.nameList);
-        //this.category.categoryId
       });
       this.selectName();
     }
@@ -68,17 +60,13 @@ export class UpdateArticleComponent{
 
   selectName()
 {
-  console.log("slected change:" + this.categoryName)
-  alert(this.categoryId);
+  //alert(this.categoryId);
 }  
 
   ngOnInit() {
-    this.service.categorySelected.subscribe(item => {this.article = item,
-                                                      item.categoryId=this.categoryId
-                                                    })
-    console.log("this.categoir",this.categoryName)
-
-
+    this.service.categorySelected.subscribe(item =>
+       {this.article = item,
+        item.categoryId=this.categoryId })
 }
 
 
@@ -89,16 +77,8 @@ export class UpdateArticleComponent{
 
       save(){
         this.form.value.id = this.id;   
-
-        //this.form.value.categoryId = this.nameId;   
-      console.log("form value", this.categoryId);
-      this.form.value.categoryId = this.categoryId;
-      //this.form.value.article.category={};
-      var cat =  this.service.getCategory(this.form.value.categoryId);
-      //this.form.value.category = this.service.getCategory(this.categoryId);//.subscribe((data)=>{ console.log('Data hjhdjshks - ', data);});
-      console.log("this form value" + this.form.value )
-      console.log("this form value" + JSON.stringify(this.form.value.category ))
-
+        this.form.value.categoryId = this.categoryId;
+        var cat =  this.service.getCategory(this.form.value.categoryId);
 
         this.service.updateArticleFromPopup(this.categoryId,this.form.value).subscribe((data)=>{
           console.log('Data - ', data);

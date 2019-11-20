@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ArticleElement } from '../interfaces/ArticleElement';
 import { UpdateArticleComponent } from '../update-article/update-article.component';
-import { MatTableDataSource, MatDialog, MatSort, MatDialogRef, MatSortHeader, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-articles',
@@ -24,20 +24,16 @@ constructor(private service: ApiService, private dialog: MatDialog) { }
   ngOnInit() {
     this.service.getArticlesWithCategory().subscribe((data) => {
       console.log("Data: - ", data);
-     // console.log("categoryName ", d);
 
       this.dataSource = new MatTableDataSource<ArticleElement>(data as ArticleElement[])
   })
   }
-
-  
 
   applyFilter(filterValue: string){
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   updateArticle(article){
-    //console.log(article);
     this.dialog.open(UpdateArticleComponent, {
       data: {
         id: article.id,
