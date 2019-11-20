@@ -4,15 +4,15 @@
       <span *ngIf ="!article.id">New Article</span>
   </mat-card-title>
 <mat-card-content>
-<form>
+<form   #editForm="ngForm">
   <mat-form-field class="fullWidth">
-    <input [(ngModel)]="article.title" name ="article" matInput placeholder="Title">
+    <input [(ngModel)]="article.title" name ="article" matInput placeholder="Title" required>
   </mat-form-field>
   <mat-form-field class="fullWidth">
-    <input [(ngModel)]="article.description" name ="description" matInput placeholder="Description">
+    <input [(ngModel)]="article.description" name ="description" matInput placeholder="Description" required>
   </mat-form-field>
   <mat-form-field class="fullWidth" >
-    <mat-select placeholder="Entry category"  [(ngModel)]="nameId" name="id" (change)="selectName();">
+    <mat-select placeholder="Entry category"  [(ngModel)]="nameId" name="id" (change)="selectName();" required>
       <mat-option *ngFor="let k of nameList" [value]="k.id">
            {{k.name}}
         </mat-option>
@@ -23,7 +23,7 @@
 <mat-card-actions>
   <button *ngIf="article.id" (click)="api.putArticle(article)" mat-button>EDIT</button>
   <button *ngIf="article.id" (click)="article = {}" mat-button>NEW</button>
-  <button *ngIf="!article.id" (click)="post(article)" mat-button>POST</button>
+  <button *ngIf="!article.id" (click)="post(article)" [disabled]="!editForm.form.valid" type="submit" mat-button>POST</button>
 </mat-card-actions>
 </mat-card>
-<app-new-articles></app-new-articles>
+<app-new-articles ></app-new-articles>

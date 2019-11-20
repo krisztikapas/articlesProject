@@ -41,8 +41,8 @@ post(article) {
    article.categoryId = this.nameId;
     this.api.postArticle(article).subscribe(data => {
       console.log("Data - ", data ,"selected",this.nameId);
-
     })
+    window.location.reload();
     
 }
 
