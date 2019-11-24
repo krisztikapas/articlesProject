@@ -20,6 +20,7 @@ export class CategoryComponent implements OnInit {
   post(category) {
     this.api.postCategory(category).subscribe(data => {
       console.log("data:" , data);
+      window.location.reload();
     })
 }
 

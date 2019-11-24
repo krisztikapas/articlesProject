@@ -42,10 +42,6 @@ export class DeleteArticleComponent implements OnInit {
       })
 
     })
-
-
-    
-
     
   }
 

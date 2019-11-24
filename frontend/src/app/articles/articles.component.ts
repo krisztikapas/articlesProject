@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ArticleElement } from '../interfaces/ArticleElement';
 import { UpdateArticleComponent } from '../update-article/update-article.component';
-import { MatTableDataSource, MatDialog, MatSort} from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-articles',
@@ -18,6 +18,8 @@ export class ArticlesComponent implements OnInit {
    set sort(sort: MatSort) {
    }
 
+   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator
+
 
 constructor(private service: ApiService, private dialog: MatDialog) { }
 
@@ -26,6 +28,7 @@ constructor(private service: ApiService, private dialog: MatDialog) { }
       console.log("Data: - ", data);
 
       this.dataSource = new MatTableDataSource<ArticleElement>(data as ArticleElement[])
+      this.dataSource.paginator = this.paginator;
   })
   }
 

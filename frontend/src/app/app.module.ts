@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 //My components
 import { ArticlesComponent } from './articles/articles.component';
 import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { CategoriesComponent } from './categories/categories.component';
 
 
@@ -50,7 +49,6 @@ import { NewArticlesComponent } from './new-articles/new-articles.component';
     AppComponent,
     ArticlesComponent,
     HeaderComponent,
-    FooterComponent,
     CategoriesComponent,
     UpdateArticleComponent,
     DeleteArticleComponent,
